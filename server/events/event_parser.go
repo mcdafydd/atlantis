@@ -289,8 +289,6 @@ type EventParser struct {
 	BitbucketServerURL string
 	AzureDevopsUser    string
 	AzureDevopsToken   string
-	AzureDevopsOrg     string
-	AzureDevopsProject string
 }
 
 // GetBitbucketCloudPullEventType returns the type of the pull request

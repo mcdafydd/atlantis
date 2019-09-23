@@ -384,8 +384,6 @@ func TestExecute_Defaults(t *testing.T) {
 	Equals(t, "https://api.bitbucket.org", passedConfig.BitbucketBaseURL)
 	Equals(t, "bitbucket-token", passedConfig.BitbucketToken)
 	Equals(t, "bitbucket-user", passedConfig.BitbucketUser)
-	Equals(t, "azuredevops-org", passedConfig.AzureDevopsOrg)
-	Equals(t, "azuredevops-project", passedConfig.AzureDevopsProject)
 	Equals(t, "azuredevops-token", passedConfig.AzureDevopsToken)
 	Equals(t, "azuredevops-user", passedConfig.AzureDevopsUser)
 	Equals(t, "", passedConfig.BitbucketWebhookSecret)

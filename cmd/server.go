@@ -487,11 +487,10 @@ func (s *ServerCmd) validate(userConfig server.UserConfig) error {
 	// 1. github user and token set
 	// 2. gitlab user and token set
 	// 3. bitbucket user and token set
-	// 4. azuredevops user, token, org and project set
+	// 4. azuredevops user and token set
 	// 5. any combination of the above
 	vcsErr := fmt.Errorf("--%s/--%s or --%s/--%s or --%s/--%s or --%s/--%s/--%s/--%s must be set", GHUserFlag, GHTokenFlag, GitlabUserFlag, GitlabTokenFlag, BitbucketUserFlag, BitbucketTokenFlag, ADUserFlag, ADTokenFlag, ADOrgFlag, ADProjectFlag)
-	if ((userConfig.GithubUser == "") != (userConfig.GithubToken == "")) || ((userConfig.GitlabUser == "") != (userConfig.GitlabToken == "")) || ((userConfig.BitbucketUser == "") != (userConfig.BitbucketToken == "")) || ((userConfig.AzureDevopsUser == "") != (userConfig.AzureDevopsToken == "") ||
-		(userConfig.AzureDevopsOrg == "") != (userConfig.AzureDevopsProject == "")) {
+	if ((userConfig.GithubUser == "") != (userConfig.GithubToken == "")) || ((userConfig.GitlabUser == "") != (userConfig.GitlabToken == "")) || ((userConfig.BitbucketUser == "") != (userConfig.BitbucketToken == "")) || ((userConfig.AzureDevopsUser == "") != (userConfig.AzureDevopsToken == "")) {
 		return vcsErr
 	}
 	// At this point, we know that there can't be a single user/token without
@@ -601,11 +600,8 @@ func (s *ServerCmd) securityWarnings(userConfig *server.UserConfig) {
 	if userConfig.BitbucketUser != "" && userConfig.BitbucketBaseURL == DefaultBitbucketBaseURL && !s.SilenceOutput {
 		s.Logger.Warn("Bitbucket Cloud does not support webhook secrets. This could allow attackers to spoof requests from Bitbucket. Ensure you are whitelisting Bitbucket IPs")
 	}
-	if userConfig.AzureDevopsUser != "" && userConfig.AzureDevopsWebhookBasicUser == "" && !s.SilenceOutput {
-		s.Logger.Warn("no Azure Devops webhook basic user set. This could allow attackers to spoof requests from Azure Devops.")
-	}
-	if userConfig.AzureDevopsUser != "" && userConfig.AzureDevopsWebhookBasicPassword == "" && !s.SilenceOutput {
-		s.Logger.Warn("no Azure Devops webhook basic password set. This could allow attackers to spoof requests from Azure Devops.")
+	if (userConfig.AzureDevopsWebhookBasicUser == "" || userConfig.AzureDevopsWebhookBasicPassword == "") && !s.SilenceOutput {
+		s.Logger.Warn("no Azure Devops webhook basic user and password set. This could allow attackers to spoof requests from Azure Devops.")
 	}
 }
 
